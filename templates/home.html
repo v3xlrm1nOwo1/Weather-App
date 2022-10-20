@@ -1,0 +1,94 @@
+{% load static %}
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Weather App</title>
+    <link rel="stylesheet" href="{% static 'css/main.css' %}" />
+</head>
+<body>
+    <div class="bg-img">
+        <br>
+        <div class="is-right">
+            <figure class="image is-128x128 is-right">
+                <a href="https://github.com/BlackHeart-Dev"><img class="is-rounded is-right" src="{% static 'img/pro.jpg' %}"></a>
+            </figure> 
+        </div>
+    <section class="section" >
+        <div class="container">
+            <div class="columns">
+                <div class="column is-offset-4 is-4">
+                    <form method="POST" novalidate>
+                        {% csrf_token %}
+                        <div class="field has-addons">
+                            <div class="control is-expanded">
+                                {% for field in form %}
+                                    <div class="file">
+                                    <div class="label white">{{ field.label_tag }}</div>    
+                                    {% if form.is_bound %}
+                                            {% render_field field class="input is-success control has-icons-left has-icons-right" %}
+                                    {% else %}
+                                        {% render_field field class="input is-success control has-icons-left has-icons-right" %}
+                                    {% endif %}
+                                </div>
+                                {% endfor %}
+                            </div>
+                            <div class="control">
+                                <button class="button is-success is-outlined">
+                                    Add City
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-offset-4 is-4">
+                    {% for weather in weather_data %}
+                    <div class="box">
+                        <article class="media">
+                            <div class="media-left">
+                                <figure class="image is-50x50">
+                                    <img src="http://openweathermap.org/img/w/{{ weather.icon }}.png" alt="Image">
+                                </figure>
+                            </div>
+                            <div class="media-content">
+                                <div class="content">
+                                    <p>
+                                        <span class="title">{{ weather.city }}</span>
+                                        <br>
+                                        <span class="subtitle">{{ weather.temperature }}° F</span>
+                                        <br> {{ weather.description }}
+                                    </p>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+</div>
+    <footer class="footer">
+        <p class="title">What's the weather like?</p>
+        <div class="buttons">
+            <a href="https://github.com/BlackHeart-Dev/Weather-App"><button class="button is-dark">Yes</button></a>
+            <a href="https://github.com/BlackHeart-Dev/Weather-App"><button class="button is-dark">NO</button></a>
+        </div>
+        <br>
+        <div class="media-left">
+            <a href="https://github.com/BlackHeart-Dev/Weather-App"><img src="{% static 'img/github.png' %}" alt="Github" width="50" height="50"></a>
+            <a href="https://twitter.com/BlackHeart_Dev"><img src="{% static 'img/twitter.png' %}" alt="twitter" width="50" height="50"></a>
+        </div>
+    </footer>
+</body>
+</html>
